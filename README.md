@@ -34,7 +34,11 @@ $ make run
 qemu-system-i386 -drive format=raw,file=floppy.img,index=0,if=floppy
 ```
 Debug with:
+
 ```bash
+$ make debug
+qemu-system-i386 -s -S -drive format=raw,file=floppy.img,index=0,if=floppy
+...
 $ gdb
 (gdb) target remote localhost:1234
 (gdb) set arch i8086
