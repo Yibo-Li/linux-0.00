@@ -33,3 +33,27 @@ Run with:
 $ make run
 qemu-system-i386 -drive format=raw,file=floppy.img,index=0,if=floppy
 ```
+Debug with:
+```bash
+$ gdb
+(gdb) target remote localhost:1234
+(gdb) set arch i8086
+(gdb) info reg cs eip
+cs      0xf000  61440
+eip     0x7c00  0x7c00
+(gdb) break *0x7c00
+(gdb) c
+Continuing.
+Breakpoint 1, 0x00007c00 in ?? ()
+(gdb) x /10i $eip
+=> 0x7c00:      ljmp   $0x7c0,$0x5
+   0x7c05:      mov    %cs,%ax
+   0x7c07:      mov    %ax,%ds
+   0x7c09:      mov    %ax,%ss
+   0x7c0b:      mov    $0x400,%sp
+   0x7c0e:      mov    $0x0,%dx
+   0x7c11:      mov    $0x2,%cx
+   0x7c14:      mov    $0x1000,%ax
+   0x7c17:      mov    %ax,%es
+   0x7c19:      xor    %bx,%bx
+```

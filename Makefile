@@ -26,5 +26,8 @@ boot: boot.s
 run:
 	qemu-system-i386 -drive format=raw,file=floppy.img,index=0,if=floppy
 
+debug:
+	qemu-system-i386 -s -S -drive format=raw,file=floppy.img,index=0,if=floppy
+
 clean:
 	rm -f floppy.img system.map boot *.o system
