@@ -63,7 +63,7 @@ Breakpoint 1, 0x00007c00 in ?? ()
    0x7c17:      mov    %ax,%es
    0x7c19:      xor    %bx,%bx
 (gdb) set arch i386
-(gdb) break systemup_32
+(gdb) break startup_32
 (gdb) cont
 Continuing.
 Breakpoint 2, 0x00000000 in startup_32 ()
