@@ -41,12 +41,14 @@ qemu-system-i386 -s -S -drive format=raw,file=floppy.img,index=0,if=floppy
 ...
 $ gdb
 (gdb) target remote localhost:1234
+(gdb) symbol-file system
+Reading symbols from system...done.
 (gdb) set arch i8086
 (gdb) info reg cs eip
 cs      0xf000  61440
-eip     0x7c00  0x7c00
+eip     0xfff0  0x7c00
 (gdb) break *0x7c00
-(gdb) c
+(gdb) cont
 Continuing.
 Breakpoint 1, 0x00007c00 in ?? ()
 (gdb) x /10i $eip
@@ -60,4 +62,20 @@ Breakpoint 1, 0x00007c00 in ?? ()
    0x7c14:      mov    $0x1000,%ax
    0x7c17:      mov    %ax,%es
    0x7c19:      xor    %bx,%bx
+(gdb) set arch i386
+(gdb) break systemup_32
+(gdb) cont
+Continuing.
+Breakpoint 2, 0x00000000 in startup_32 ()
+(gdb) x /10i $eip
+=> 0x0 <startup_32>:            mov    $0x10,%eax
+   0x5 <startup_32+5>:          mov    %eax,%ds
+   0x7 <startup_32+7>:          lss    0xbd8,%esp
+   0xe <startup_32+14>:         call   0xb5 <setup_idt>
+   0x13 <startup_32+19>:        call   0xad <setup_gdt>
+   0x18 <startup_32+24>:        mov    $0x10,%eax
+   0x1d <startup_32+29>:        mov    %eax,%ds
+   0x1f <startup_32+31>:        mov    %eax,%es
+   0x21 <startup_32+33>:        mov    %eax,%fs
+   0x23 <startup_32+35>:        mov    %eax,%gs
 ```

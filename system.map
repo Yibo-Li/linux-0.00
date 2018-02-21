@@ -203,11 +203,13 @@ LOAD head.o
                 [!provide]                        PROVIDE (end, .)
                 0x0000000000002304                . = DATA_SEGMENT_END (.)
 
-.stab
+.stab           0x0000000000000000      0x63c
  *(.stab)
+ .stab          0x0000000000000000      0x63c head.o
 
-.stabstr
+.stabstr        0x0000000000000000       0x33
  *(.stabstr)
+ .stabstr       0x0000000000000000       0x33 head.o
 
 .stab.excl
  *(.stab.excl)
